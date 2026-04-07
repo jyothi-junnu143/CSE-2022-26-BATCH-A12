@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Carbon Footprint Calculator</title>
+
+<style>
+
+body{
+font-family: 'Segoe UI', sans-serif;
+background: linear-gradient(135deg,#74ebd5,#ACB6E5);
+padding:40px;
+}
+
+.container{
+width:750px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:15px;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+h2{
+text-align:center;
+margin-bottom:20px;
+}
+
+.tabs{
+display:flex;
+justify-content:space-between;
+margin-bottom:20px;
+}
+
+.tab{
+padding:12px 18px;
+border-radius:8px;
+cursor:pointer;
+background:#ecf0f1;
+transition:0.3s;
+font-weight:600;
+}
+
+.tab:hover{
+background:#dcdde1;
+}
+
+.tab.active{
+background:#2ecc71;
+color:white;
+}
+
+.tab-content{
+display:none;
+animation:fade 0.3s ease-in-out;
+}
+
+.tab-content.active{
+display:block;
+}
+
+@keyframes fade{
+from{opacity:0;}
+to{opacity:1;}
+}
+
+label{
+font-weight:600;
+margin-top:10px;
+display:block;
+}
+
+input,select{
+width:100%;
+padding:10px;
+margin-top:6px;
+margin-bottom:12px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+button{
+background:#27ae60;
+color:white;
+border:none;
+padding:14px;
+width:100%;
+font-size:16px;
+border-radius:8px;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#1e8449;
+}
+
+.logout{
+margin-top:15px;
+display:block;
+text-align:center;
+color:#555;
+}
+
+</style>
+
+<script>
+
+function showTab(tabIndex){
+
+let tabs = document.querySelectorAll(".tab");
+let contents = document.querySelectorAll(".tab-content");
+
+tabs.forEach(t=>t.classList.remove("active"));
+contents.forEach(c=>c.classList.remove("active"));
+
+tabs[tabIndex].classList.add("active");
+contents[tabIndex].classList.add("active");
+
+}
+
+function validateForm(){
+
+let inputs=document.querySelectorAll("input,select");
+
+for(let i=0;i<inputs.length;i++){
+
+if(inputs[i].value===""){
+alert("⚠ Please enter all inputs before prediction.");
+return false;
+}
+
+}
+
+return true;
+
+}
+
+</script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>🌍 Carbon Footprint Calculator</h2>
+
+<div class="tabs">
+
+<div class="tab active" onclick="showTab(0)">🚗 Transportation</div>
+<div class="tab" onclick="showTab(1)">🗑 Waste</div>
+<div class="tab" onclick="showTab(2)">💻 Digital Usage</div>
+<div class="tab" onclick="showTab(3)">⚡ Energy & Lifestyle</div>
+
+</div>
+
+<form action="/predict" method="post" onsubmit="return validateForm()">
+
+<!-- Transportation Tab -->
+
+<div class="tab-content active">
+
+<label>Transportation Mode</label>
+<select name="transport">
+<option value="">Select</option>
+<option>public</option>
+<option>private</option>
+<option>walk/bicycle</option>
+</select>
+
+<label>Vehicle Type</label>
+<select name="vehicle">
+<option value="">Select</option>
+<option>petrol</option>
+<option>diesel</option>
+<option>hybrid</option>
+<option>electric</option>
+<option>lpg</option>
+</select>
+
+<label>Daily Vehicle Distance (km)</label>
+<input type="number" name="distance">
+
+<label>Air Travel</label>
+<select name="air">
+<option value="">Select</option>
+<option>never</option>
+<option>rarely</option>
+<option>frequently</option>
+<option>very frequently</option>
+</select>
+
+</div>
+
+
+<!-- Waste Tab -->
+
+<div class="tab-content">
+
+<label>Waste Bag Size</label>
+<select name="waste_size">
+<option value="">Select</option>
+<option>small</option>
+<option>medium</option>
+<option>large</option>
+<option>extra large</option>
+</select>
+
+<label>Waste Bags Per Week</label>
+<input type="number" name="waste_count">
+
+</div>
+
+
+<!-- Digital Usage Tab -->
+
+<div class="tab-content">
+
+<label>Daily Browsing Hours</label>
+<input type="number" name="browsing">
+
+<label>Daily TV/PC Hours</label>
+<input type="number" name="tv">
+
+<label>Daily Internet Hours</label>
+<input type="number" name="internet">
+
+<label>Daily Emails Sent</label>
+<input type="number" name="emails">
+
+<label>Daily Social Media Usage (hrs)</label>
+<input type="number" name="media">
+
+<label>Cloud Storage Usage (GB)</label>
+<input type="number" name="cloud">
+
+</div>
+
+
+<!-- Energy Tab -->
+
+<div class="tab-content">
+
+<label>Energy Efficient Appliances</label>
+<select name="energy">
+<option value="">Select</option>
+<option>No</option>
+<option>Yes</option>
+<option>Sometimes</option>
+</select>
+
+<label>Social Activity</label>
+<select name="social">
+<option value="">Select</option>
+<option>never</option>
+<option>sometimes</option>
+<option>often</option>
+</select>
+
+</div>
+
+<button type="submit">🌱 Calculate Carbon Footprint</button>
+
+</form>
+
+<a class="logout" href="/logout">Logout</a>
+
+</div>
+
+</body>
+</html>

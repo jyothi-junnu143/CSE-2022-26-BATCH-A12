@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌿 Carbon Footprint Result</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        font-family: 'Roboto', Arial, sans-serif;
+        background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        animation: backgroundShift 15s infinite alternate;
+    }
+
+    @keyframes backgroundShift {
+        0% {background-position: 0% 50%;}
+        100% {background-position: 100% 50%;}
+    }
+
+    .box {
+        background: #ffffffcc;
+        width: 600px;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        animation: popUp 0.6s ease-out;
+    }
+
+    @keyframes popUp {
+        0% { transform: scale(0.8); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    h2 {
+        color: #2c3e50;
+        margin-bottom: 20px;
+    }
+
+    h1 {
+        font-size: 60px;
+        margin: 20px 0;
+        color: #27ae60;
+        animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
+
+    h3 {
+        font-size: 20px;
+        margin-bottom: 20px;
+        color: #16a085;
+    }
+
+    .suggestion {
+        background: #f1c40f;
+        color: #2c3e50;
+        padding: 15px;
+        border-radius: 10px;
+        margin: 15px 0;
+        font-weight: bold;
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px);}
+        to { opacity: 1; transform: translateY(0);}
+    }
+
+    a {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 12px 25px;
+        background: #2980b9;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    a:hover {
+        background: #3498db;
+    }
+
+    /* Progress bar */
+    .progress {
+        height: 20px;
+        background: #ecf0f1;
+        border-radius: 10px;
+        overflow: hidden;
+        margin: 20px 0;
+    }
+
+    .progress-bar {
+        height: 100%;
+        background: #27ae60;
+        width: 0%;
+        border-radius: 10px;
+        text-align: right;
+        padding-right: 10px;
+        color: white;
+        font-weight: bold;
+        line-height: 20px;
+        animation: fillBar 1.5s forwards;
+    }
+
+    @keyframes fillBar {
+        from { width: 0%; }
+        to { width: var(--percent); }
+    }
+
+</style>
+</head>
+<body>
+
+<div class="box">
+    <h2>🌿 Your Carbon Footprint</h2>
+
+    <h1>{{prediction}}</h1>
+
+    <div class="progress">
+        <div class="progress-bar" style="--percent: {{progress_percent}}%;">
+            {{progress_percent}}%
+        </div>
+    </div>
+
+    <h3>You owe nature {{trees}} tree{{ 's' if trees > 1 else '' }} 🌳 monthly</h3>
+
+    <!-- Suggestions based on thresholds -->
+    {% if prediction < 500 %}
+        <div class="suggestion">Excellent! Your carbon footprint is low. Keep it up by maintaining sustainable habits. 🌱</div>
+    {% elif prediction < 1000 %}
+        <div class="suggestion">Moderate footprint. Try reducing meat consumption, use public transport, and recycle more. 🚴‍♂️</div>
+    {% elif prediction < 2000 %}
+        <div class="suggestion">High footprint. Consider renewable energy sources and minimize energy usage at home. ⚡</div>
+    {% else %}
+        <div class="suggestion">Very High footprint! Urgent action needed: reduce travel, energy consumption, and change lifestyle habits. 🌏</div>
+    {% endif %}
+
+    <a href="/home">🔄 Calculate Again</a>
+</div>
+
+<script>
+    // Animate progress bar width
+    const progressBar = document.querySelector('.progress-bar');
+    const percent = progressBar.style.getPropertyValue('--percent');
+    progressBar.style.width = percent;
+</script>
+
+</body>
+</html>
